@@ -5,31 +5,62 @@
  */
 package br.edu.ifro;
 
+import br.edu.ifro.modelo.Aluno;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
  * @author 3019657
  */
 public class TelaPrincipalController implements Initializable {
-    
+        
     @FXML
-    private Label label;
-    
+    private TableView<Aluno> tbAlunos;
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private TextField txtNome;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula");
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createQuery("SELECT a FROM Aluno as a");
+        List<Aluno> alunos = query.getResultList();
+        ObservableList ob = FXCollections.observableArrayList(alunos);
+        tbAlunos.setItems(ob);
+        em.close();
+        emf.close();
     }    
+    
+    private void gravar(ActionEvent event) {
+        Aluno aluno = new Aluno();
+        aluno.setNome("fulano");
+        aluno.setCpf("125678");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin(); // trasaction
+        em.persist(aluno);
+        em.getTransaction().commit(); // trasaction
+    }
+
+    @FXML
+    private void select(MouseEvent event) {        
+        Aluno a = (Aluno) tbAlunos.getSelectionModel().getSelectedItem();
+        txtNome.setText(a.getNome());
+    }
     
 }

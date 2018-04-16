@@ -12,7 +12,7 @@ public class Aluno {
     private Integer id;
     private String nome;
     private String cpf;
-
+    
     public Integer getId() {
         return id;
     }
