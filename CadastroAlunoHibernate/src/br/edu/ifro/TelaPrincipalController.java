@@ -28,11 +28,16 @@ import javax.persistence.Query;
  * @author 3019657
  */
 public class TelaPrincipalController implements Initializable {
+
+    @FXML
+    private TableView<?> tbAlunos;
+    @FXML
+    private TextField n3;
+    @FXML
+    private TextField n2;
+    @FXML
+    private TextField n1;
         
-    @FXML
-    private TableView<Aluno> tbAlunos;
-    @FXML
-    private TextField txtNome;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,7 +65,7 @@ public class TelaPrincipalController implements Initializable {
     @FXML
     private void select(MouseEvent event) {        
         Aluno a = (Aluno) tbAlunos.getSelectionModel().getSelectedItem();
-        txtNome.setText(a.getNome());
+        n1.setText(a.getNome());
     }
     
 }
