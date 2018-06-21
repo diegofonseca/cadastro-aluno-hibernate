@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -37,16 +38,23 @@ public class TelaPrincipalController implements Initializable {
     private TextField n2;
     @FXML
     private TextField n1;
+    @FXML
+    private ComboBox<?> cb;
         
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula");
         EntityManager em = emf.createEntityManager();
+        
+        // HQL 
         Query query = em.createQuery("SELECT a FROM Aluno as a");
         List<Aluno> alunos = query.getResultList();
+        
         ObservableList ob = FXCollections.observableArrayList(alunos);
         tbAlunos.setItems(ob);
+        cb.setItems(ob);
+        
         em.close();
         emf.close();
     }    

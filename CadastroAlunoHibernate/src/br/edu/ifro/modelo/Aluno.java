@@ -13,6 +13,10 @@ public class Aluno {
     private String nome;
     private String cpf;
     
+    public String toString() {
+        return this.nome;
+    }
+    
     public Integer getId() {
         return id;
     }

@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="314.0" prefWidth="532.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifro.TelaPrincipalController">
    <children>
-      <TableView fx:id="tbAlunos" layoutX="6.0" layoutY="88.0" onMouseClicked="#select" prefHeight="200.0" prefWidth="447.0">
+      <TableView fx:id="tbAlunos" layoutX="6.0" layoutY="88.0" onMouseClicked="#select" prefHeight="200.0" prefWidth="273.0">
         <columns>
           <TableColumn text="Id">
             <cellValueFactory><PropertyValueFactory property="id" />
@@ -29,5 +29,6 @@
       <TextField fx:id="n3" layoutX="14.0" layoutY="33.0" />
       <TextField fx:id="n2" layoutX="200.0" layoutY="33.0" />
       <TextField fx:id="n1" layoutX="359.0" layoutY="33.0" />
+      <ComboBox fx:id="cb" layoutX="326.0" layoutY="88.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
