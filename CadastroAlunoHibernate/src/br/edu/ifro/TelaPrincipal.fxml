@@ -25,10 +25,11 @@
              </cellValueFactory>
         </TableColumn>
         </columns>
-      </TableView>
-      <TextField fx:id="n3" layoutX="14.0" layoutY="33.0" />
+      </TableView>      
+      <ComboBox fx:id="cb" layoutX="326.0" layoutY="88.0" prefWidth="150.0" />
+      
+      <TextField fx:id="n3" layoutX="14.0" layoutY="33.0" onKeyPressed="#onPressEnter" />
       <TextField fx:id="n2" layoutX="200.0" layoutY="33.0" />
       <TextField fx:id="n1" layoutX="359.0" layoutY="33.0" />
-      <ComboBox fx:id="cb" layoutX="326.0" layoutY="88.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
