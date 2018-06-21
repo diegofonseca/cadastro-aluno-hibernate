@@ -6,6 +6,8 @@
 package br.edu.ifro;
 
 import br.edu.ifro.modelo.Aluno;
+import br.eti.diegofonseca.MaskFieldUtil;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,17 +37,21 @@ public class TelaPrincipalController implements Initializable {
     @FXML
     private TableView<?> tbAlunos;
     @FXML
-    private TextField n3;
-    @FXML
     private TextField n2;
     @FXML
     private TextField n1;
     @FXML
     private ComboBox<?> cb;
+    @FXML
+    private JFXTextField n3;
+
         
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) { 
+        MaskFieldUtil.cpfCnpjField(n2);
+        MaskFieldUtil.foneField(n3);
+        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula");
         EntityManager em = emf.createEntityManager();
 
@@ -81,10 +87,9 @@ public class TelaPrincipalController implements Initializable {
         n1.setText(a.getNome());
     }
 
-    @FXML
     private void onPressEnter(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            
+             System.out.println("cpf informado: "+ MaskFieldUtil.onlyDigitsValue(n2));
         }
     }
     
