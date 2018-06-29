@@ -7,6 +7,7 @@ package br.edu.ifro;
 
 import br.edu.ifro.modelo.Aluno;
 import br.eti.diegofonseca.MaskFieldUtil;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.List;
@@ -44,6 +45,8 @@ public class TelaPrincipalController implements Initializable {
     private ComboBox<?> cb;
     @FXML
     private JFXTextField n3;
+    @FXML
+    private JFXComboBox<?> cbFx;
 
         
     
@@ -51,23 +54,6 @@ public class TelaPrincipalController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) { 
         MaskFieldUtil.cpfCnpjField(n2);
         MaskFieldUtil.foneField(n3);
-        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula");
-        EntityManager em = emf.createEntityManager();
-
-        // Busca utilizando HQL
-        Query query = em.createQuery("SELECT a FROM Aluno as a");
-        List<Aluno> alunos = query.getResultList();
-
-        // Converte lista para observable list
-        ObservableList ob = FXCollections.observableArrayList(alunos);
-        // Adiciona resultado a Tabela
-        tbAlunos.setItems(ob);
-        // Adiciona resultado ao Combobox
-        cb.setItems(ob);        
-
-        em.close();
-        emf.close();
     }      
     
     private void gravar(ActionEvent event) {
@@ -87,10 +73,45 @@ public class TelaPrincipalController implements Initializable {
         n1.setText(a.getNome());
     }
 
+    @FXML
     private void onPressEnter(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-             System.out.println("cpf informado: "+ MaskFieldUtil.onlyDigitsValue(n2));
+            Aluno o = (Aluno) cb.getSelectionModel().getSelectedItem();
+            System.out.println(o);
+            
+            Aluno ox = (Aluno) cbFx.getSelectionModel().getSelectedItem();            
+            System.out.println(ox);
+            
+            System.out.println("cpf informado: "+ MaskFieldUtil.onlyDigitsValue(n2));
         }
+    }
+
+    @FXML
+    private void pesquisar(ActionEvent event) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula");
+        EntityManager em = emf.createEntityManager();
+
+        // Busca utilizando HQL
+        Query query = em.createQuery("SELECT a FROM Aluno as a WHERE a.nome = :nome OR a.id = :id");
+        try {
+            query.setParameter("id", Integer.parseInt(n1.getText()));
+        } catch (NumberFormatException e) {
+            query.setParameter("id", -1);
+        }
+        query.setParameter("nome", n1.getText());
+        List<Aluno> alunos = query.getResultList();
+
+        // Converte lista para observable list
+        ObservableList ob = FXCollections.observableArrayList(alunos);      
+        
+        // Adiciona resultado a Tabela
+        tbAlunos.setItems(ob);
+        // Adiciona resultado ao Combobox
+        cb.setItems(ob);       
+        cbFx.setItems(ob);
+
+        em.close();
+        emf.close();
     }
     
 }
